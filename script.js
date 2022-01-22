@@ -44,11 +44,16 @@ let num1, num2, operator, result;
 let allButtons = document.querySelectorAll('button[class^=num]');
 for (var i = 0; i < allButtons.length; i++) {
   allButtons[i].addEventListener('click', function() {
-    //console.clear();
-    numClicked = this.textContent;
-    console.log("You clicked:", this.textContent);
+    let temp = 0;
+    if(numClicked){
+        temp = numClicked*10 + +this.textContent;
+        numClicked = temp;
+    } else {numClicked = this.textContent;}
+   // console.log("You clicked:", this.textContent);
 
-    //populating clicked value in display
+    // making num1 multiple digit number
+
+    //populating clicked value in display if single digit
     document.getElementById('display').innerHTML = numClicked;
   });
 }
@@ -57,12 +62,26 @@ for (var i = 0; i < allButtons.length; i++) {
 let operandButtons = document.querySelectorAll('button[class^=sign]');
 for(var i=0; i<operandButtons.length; i++){
     operandButtons[i].addEventListener('click', function() {
-        operator = this.textContent;
-        console.log("You clicked:", this.textContent);
+        // populating num1 if it is already populated (ie in multiple operations)
+        // for example: 2 + 4 / 4 - 5
+        if(num1){
+            let test = num1;
+            console.log("New num1 is", numClicked);
+            num1 = operate(test, operator, numClicked);
+            console.log("partial result", num1);
+        }
 
-        // populating num1
-        num1 = numClicked;
-        console.log("num1 is", num1);
+        // populating num1 
+        if(!num1){
+            num1 = numClicked;
+            console.log("num1 is", num1);
+        }
+        
+        operator = this.textContent;
+        console.log("You clicked:", this.textContent); 
+        
+        // making numCLicked free for storing more values
+        numClicked = undefined;
     })
 }
 
@@ -79,4 +98,25 @@ equalButton.addEventListener('click', function() {
 
    // populating display with result
    document.getElementById('display').innerHTML = result;
+
+   // clearing the values of variables
+   num1 = undefined;
+   num2 = undefined;
+   operator = undefined;
+   result = undefined;
+    numClicked = undefined;
+})
+
+// clearing all values again by clear button
+let clearButton = document.getElementById('clear');
+clearButton.addEventListener('click', function() {
+    // clearing the values of variables
+   num1 = undefined;
+   num2 = undefined;
+   operator = undefined;
+   result = undefined;
+   numClicked = undefined;
+
+   document.getElementById('display').innerHTML = '----';
+   console.clear();
 })
