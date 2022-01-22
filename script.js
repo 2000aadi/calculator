@@ -48,7 +48,14 @@ for (var i = 0; i < allButtons.length; i++) {
     if(numClicked){
         temp = numClicked*10 + +this.textContent;
         numClicked = temp;
-    } else {numClicked = this.textContent;}
+    } else {
+        if(operator == '/' && this.textContent=='0'){
+            window.alert("Ramanujan didn't give us the ability to divide numbners by zero");
+           // numClicked = num1;
+        }else{
+            numClicked = this.textContent;
+        }
+    }
    // console.log("You clicked:", this.textContent);
 
     // making num1 multiple digit number
@@ -109,7 +116,9 @@ equalButton.addEventListener('click', function() {
 
 // clearing all values again by clear button
 let clearButton = document.getElementById('clear');
-clearButton.addEventListener('click', function() {
+clearButton.addEventListener('click', clearFunc);
+
+function clearFunc() {
     // clearing the values of variables
    num1 = undefined;
    num2 = undefined;
@@ -119,4 +128,4 @@ clearButton.addEventListener('click', function() {
 
    document.getElementById('display').innerHTML = '----';
    console.clear();
-})
+}
